@@ -1,0 +1,30 @@
+#spring:
+#  application:
+#    name: ApiGateWay
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: false
+#          lower-case-service-id: true
+#      routes:
+#        - id: product-service
+#          uri: lb://PRODUCTSERVICES
+#          predicates:
+#            - Path=/productservices/**
+#          filters:
+#            - RewritePath=/productservices/(?<segment>.*), /${segment}
+#            - name: CircuitBreaker
+#              args:
+#                name: productCircuitBreaker
+#                fallbackUri: forward:/fallback/products
+#
+#server:
+#  port: 9080
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#    register-with-eureka: true
+#    fetch-registry: true
